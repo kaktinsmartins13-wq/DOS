@@ -1,0 +1,56 @@
+name: Bug report
+about: Report a reproducible defect in the kernel, tools, pool, or contracts
+labels: bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please search existing issues first. Do not include private keys, tokens, wallet credentials, or undisclosed security vulnerabilities here; use SECURITY.md instead.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: What went wrong?
+      placeholder: A concise description of the failure
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Include exact commands, inputs, and the smallest reproducer you have.
+      placeholder: |
+        1. Build with ...
+        2. Run ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include hardware or QEMU configuration, toolchain, commit, and model/checkpoint if relevant.
+      placeholder: |
+        Hardware/QEMU:
+        Commit:
+        Toolchain:
+        Model:
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs and evidence
+      description: Paste relevant output, diagnostic results, or a link to an artifact. Redact secrets.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety checks
+      options:
+        - label: I searched existing issues.
+          required: true
+        - label: I removed secrets and sensitive data from the report.
+          required: true
+        - label: This is not an undisclosed security vulnerability.
+          required: true
