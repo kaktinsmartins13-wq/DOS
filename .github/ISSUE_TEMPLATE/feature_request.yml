@@ -1,0 +1,41 @@
+name: Feature or research proposal
+about: Propose a measurable capability or improvement
+labels: enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        GLaDOS favors proposals with a clear experiment, oracle, and refusal behavior. For security issues, use SECURITY.md rather than a public issue.
+  - type: input
+    id: title
+    attributes:
+      label: Proposal
+      description: What should GLaDOS do better?
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What problem does this solve, and for whom?
+    validations:
+      required: true
+  - type: textarea
+    id: design
+    attributes:
+      label: Suggested design
+      description: Describe the approach, affected subsystems, and compatibility or safety implications.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Measurement plan
+      description: What test, benchmark, oracle, or QEMU/hardware evidence would demonstrate success?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and limitations
+      description: What alternatives were considered? What remains explicitly out of scope?
