@@ -1,0 +1,26 @@
+loopcert 1
+seq 29
+utc 2026-09-27T08:25:05Z
+point f72e2c42e491438e3d4eda393851d6ff7c95d7c41ef474bdeea18fa8dcfdac2d
+kind tune
+rung 1
+axis grid
+parent-tree 2960f45f29db9618d97a234a03d32e3510e81a06
+candidate-tree 9ae2a9edf384149a8021699751d161136ebd46a0
+rail host.retrieval
+corpus ae595a23
+alpha-k 25
+chi-bar 16.649
+minutes 80
+half extend
+level 1
+boots 2
+queries 500
+sections 30/30
+suites 68/68
+claims 1239/1239
+witness -
+moved unstable
+why host.retrieval same fixed 1 broke 1 of 323, net under 4
+verdict refuse
+runner 36305421372/1
