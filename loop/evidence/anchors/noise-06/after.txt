@@ -1,16 +1,16 @@
 [rail] v1
-video.rect 92.000 us lower
-video.draw 3199.000 us lower
+video.rect 95.000 us lower
+video.draw 3186.000 us lower
 video.present 378.000 us lower
-video.fill_present 486.000 us lower
-video.console 917.000 us lower
+video.fill_present 477.000 us lower
+video.console 922.000 us lower
 core.new 60.000 ns lower
-core.step 20853.000 ps lower
-core.vote 4401.000 ns lower
-core.vote_walk 4159.000 ns lower
-ai.matmul 9.692 gflops higher
+core.step 21046.000 ps lower
+core.vote 4314.000 ns lower
+core.vote_walk 4068.000 ns lower
+ai.matmul 9.603 gflops higher
 ai.bpb absent mbits lower  -- no checkpoint, or too little history to read
 ai.answer absent mbits lower  -- no checkpoint, or no question fits the window
-smp.one_core 4252.000 mbs higher
-smp.all_cores 33379.000 mbs higher
+smp.one_core 4209.000 mbs higher
+smp.all_cores 32357.000 mbs higher
 [rail] end
