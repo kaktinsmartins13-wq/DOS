@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing an operating system with no test runner</title>
+<meta name="description" content="No cargo test, no host runtime. Verification is twenty-six self-test sections at boot, forty-two named diag suites, a scripted emulator harness, a numeric oracle, and a differential harness with a canary that must fail.">
+<meta name="keywords" content="OS testing, no test runner, boot self test, QEMU harness, numeric oracle, differential testing, WHPX">
+<link rel="canonical" href="https://glados.aperture.institute/wiki/testing.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GLaDOS">
+<meta property="og:title" content="Testing an operating system with no test runner">
+<meta property="og:description" content="No cargo test, no host runtime. Verification is twenty-six self-test sections at boot, forty-two named diag suites, a scripted emulator harness, a numeric oracle, and a differential harness with a canary that must fail.">
+<meta property="og:url" content="https://glados.aperture.institute/wiki/testing.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Testing an operating system with no test runner">
+<meta name="twitter:description" content="No cargo test, no host runtime. Verification is twenty-six self-test sections at boot, forty-two named diag suites, a scripted emulator harness, a numeric oracle, and a differential harness with a canary that must fail.">
+<meta property="og:image" content="https://glados.aperture.institute/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The GLaDOS aperture mark">
+<meta name="twitter:image" content="https://glados.aperture.institute/img/og.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../img/icon-180.png">
+<link rel="manifest" href="../site.webmanifest">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"GLaDOS","item":"https://glados.aperture.institute/"},{"@type":"ListItem","position":2,"name":"Wiki","item":"https://glados.aperture.institute/wiki/"},{"@type":"ListItem","position":3,"name":"Testing without a test runner","item":"https://glados.aperture.institute/wiki/testing.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Testing an operating system with no test runner","description":"No cargo test, no host runtime. Verification is twenty-six self-test sections at boot, forty-two named diag suites, a scripted emulator harness, a numeric oracle, and a differential harness with a canary that must fail.","url":"https://glados.aperture.institute/wiki/testing.html","dateModified":"2026-08-30","keywords":"OS testing, no test runner, boot self test, QEMU harness, numeric oracle, differential testing, WHPX","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"GLaDOS","url":"https://glados.aperture.institute/"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="page">
+
+<!--masthead-->
+<div id="masthead">
+  <div class="titlebar"><a class="mark" href="../"><img src="../img/logo.svg" alt="" width="24" height="24"><span>Aperture Institute</span></a><span class="ctl" aria-hidden="true"><i></i><i></i><i class="x"></i></span></div>
+  <div class="addr"><span class="orb" aria-hidden="true"></span><span class="sub">GLaDOS: an operating system in Rust, with a language model in the kernel</span></div>
+</div>
+<!--/masthead-->
+
+<!--bar-->
+<div id="tabs"><ul><li><a href="../">Summary</a></li><li><a href="../download/">Download</a></li><li><a href="../news/">News</a></li><li class="on"><a href="../wiki/">Wiki</a></li><li><a href="../screenshots/">Screenshots</a></li><li><a href="../archive/">Archive</a></li><li><a href="../token/">Token</a></li><li><a href="../pool/">Pool</a></li><li><a href="https://github.com/IlumCI/GLaDOS" rel="noopener">Source code</a></li></ul></div>
+<!--/bar-->
+
+<div id="body">
+<!--sidebar-->
+<div id="sidebar">
+<div class="box"><div class="t">Latest release</div><div class="bd"><table class="facts"><tr><td>Version</td><td>1.4.5</td></tr><tr><td>Released</td><td>2026-11-18</td></tr><tr><td>Images</td><td>4</td></tr></table><ul><li><a href="../download/">Download</a></li><li><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.5">Release notes</a></li></ul></div></div>
+<div class="box"><div class="t">Project information</div><div class="bd"><table class="facts"><tr><td>Development status</td><td>3 - Alpha</td></tr><tr><td>Environment</td><td>Console, framebuffer</td></tr><tr><td>Intended audience</td><td>Developers, science/research</td></tr><tr><td>Licence</td><td>Other/proprietary, all rights reserved</td></tr><tr><td>Natural language</td><td>English</td></tr><tr><td>Operating system</td><td>x86-64 UEFI, bare metal</td></tr><tr><td>Programming language</td><td>Rust, Python</td></tr><tr><td>Topic</td><td>Operating systems, kernels, artificial intelligence</td></tr></table></div></div>
+<div class="box"><div class="t">Statistics</div><div class="bd"><table class="facts"><tr><td>Registered</td><td>2026-09-01</td></tr><tr><td>Releases</td><td>20</td></tr><tr><td>Downloads</td><td>644</td></tr><tr><td>Source</td><td>198 files, ~132,000 lines</td></tr></table></div></div>
+<div class="box"><div class="t">Developers</div><div class="bd"><table class="facts"><tr><td>IlumCI</td><td>project admin, developer</td></tr></table></div></div>
+<div class="box"><div class="t">Documentation</div><div class="bd"><ul><li><a href="../wiki/glados-os.html">GLaDOS OS</a></li><li><a href="../wiki/kernel.html">The kernel</a></li><li><a href="../wiki/model.html">The model</a></li><li><a href="../wiki/agent.html">The agent</a></li><li><a href="../wiki/rsi.html">Self-improvement</a></li><li><a href="../wiki/aiksi.html">Aiksi, the language</a></li><li><a href="../wiki/">All 18 articles</a></li></ul></div></div>
+</div>
+<!--/sidebar-->
+<div id="content">
+<div class="crumbs"><a href="../">GLaDOS</a> / <a href="../wiki/">Wiki</a> / Testing without a test runner</div>
+<div id="main">
+<h1>Testing an operating system with no test runner</h1>
+<p>There is no <code>cargo test</code> here. This is a bare-metal binary with no host runtime, so a test that runs on the development machine is testing something other than the system. Verification is four instruments.</p>
+
+<h2 id="1-self-tests-at-boot">1. Self-tests at boot</h2>
+<p>Twenty-six sections run during boot, printing a claim and whether the machine met it. <code>diag</code> registers forty-two named suites that can be re-run on demand, most of them the same checks. Heap, timer, clock, the Merkle addressing, fifteen sets of published cipher vectors, fault handling, constrained decoding, the agent loop, the linear probe, the situation planner, the initiative policy, the self-modification gate, corpus bundles, adapters, the backward kernels and the trainer's arithmetic.</p>
+<p>Registration is deliberately awkward: adding a suite requires a slot in a results table and a compile-time assertion that the two lengths match, so a suite added without a slot fails the build.</p>
+<p>Reading that output is the test suite, and skipping it has cost real time twice. A signature verification break sat visible in the log for a full debugging cycle while the output was being filtered to the section under work.</p>
+
+<h2 id="2-a-scripted-emulator-harness">2. A scripted emulator harness</h2>
+<p>A driver script boots the emulator and drives the shell over a serial socket, so a change can be booted and exercised without a human at a keyboard. It stages the release binary, resets firmware variables to a known state, and attaches serial as a socket, because the emulator's console channel on this host reads console handles and ignores redirected files.</p>
+<p>Three things are worth knowing before a session goes sideways. The resident mind wakes fifteen seconds in and holds the model for a whole episode, so the first two commands should always stand it down. The hypervisor accelerator is about 160 times faster than pure emulation on this workload, and everything previously treated as too slow to test here was an untested assumption about the emulator. And the release artefact is what gets staged, so a debug build alone leaves the change under test unbooted.</p>
+
+<h2 id="3-a-numeric-oracle">3. A numeric oracle</h2>
+<p>A host-side reference implementation reads the same converted checkpoint and prints logits for a token sequence, so a conversion bug shows up there too and only a kernel bug shows as a mismatch. Comparing generated text against a known fact is the cheap end of the same instrument, and it is the one that caught the rotary embedding.</p>
+<p>The gradient checks work the same way, and they are directional, for a reason of resolution. Differencing one parameter asks floating point to resolve a quantity below the loss's own rounding, and it reported a value that was a float quantum wearing the costume of a derivative. Stepping every parameter along the gradient asks it to resolve something far larger, and checks the whole vector: 1.148 analytic against 1.135 numeric over 57,600 entries.</p>
+
+<h2 id="4-a-differential-harness-with-a-canary">4. A differential harness with a canary</h2>
+<p>The newest instrument runs one program two ways and requires the results to agree on value, step count and error text, bit for bit with no tolerance. Any difference at all is a bug and a tolerance would hide the one worth finding.</p>
+<p>The part that makes it a harness is the canary. A suite that has never reported a difference is indistinguishable from one that compares nothing, so it runs two programs that differ by a single unused declaration, giving identical answers and step counts one apart, and it fails if that is not caught. That is the difference a comparison looking only at answers would wave through, and it earned its place immediately by catching a genuine miscount the first time a code generator was compared against the interpreter.</p>
+<p>The corpus runs sixty-four times, which is a number arrived at the hard way elsewhere in this tree: a one-shot check of the multiprocessing split passed while the implementation still deadlocked.</p>
+
+<h2 id="the-habit-underneath">The habit underneath</h2>
+<p>Measure first, then argue, and publish the measurements that overturned the argument. A renderer survey ranked several changes and the real win was none of them. A design panel predicted a benefit of five to seven and the system reported two. A plan called it near certain that a tree walk was the cost, and the tree walk turned out to be eight percent of it.</p>
+<p>Negative results stay in the tree for the same reason. Training the classifier head hurts at this data scale. The product-of-experts ensemble does not improve accuracy. Both are kept, because the reason to know them is the reason they were worth measuring.</p>
+<div class="seealso"><b>See also:</b> <a href="kernel.html">The kernel</a>, <a href="model.html">The model</a>, <a href="agent.html">The agent</a>, <a href="glados-os.html">GLaDOS OS</a></div>
+</div>
+</div>
+</div>
+
+<!--footer-->
+<div id="footer">
+  <a class="start" href="../" aria-hidden="true" tabindex="-1"><img src="../img/logo.svg" alt="" width="30" height="30"></a>
+  <p>GLaDOS, Aperture Science and Portal are properties of Valve Corporation. This project is independent and is not affiliated with, endorsed by, or connected to Valve in any way.</p>
+  <p>Copyright 2026. All rights reserved. The source is published so it can be read; redistribution and derivatives need asking. What is not ours -- two vendored font crates, two typefaces, Intel's register layouts and Wi-Fi firmware, and the diagrams -- is listed on <a href="../credits.html">the credits page</a>.</p>
+  <p>No cookies, no analytics, no telemetry of any kind. Last updated 2026-11-18.</p>
+</div>
+<!--/footer-->
+
+</div>
+</body>
+</html>

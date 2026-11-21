@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TempleOS. What this project inherited from it</title>
+<meta name="description" content="What TempleOS got right about single address space computing, where this system follows it, and where the two deliberately diverge.">
+<meta name="keywords" content="TempleOS, Terry Davis, HolyC, single address space, ring 0 operating system, God Says">
+<link rel="canonical" href="https://glados.aperture.institute/wiki/templeos.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GLaDOS">
+<meta property="og:title" content="TempleOS. What this project inherited from it">
+<meta property="og:description" content="What TempleOS got right about single address space computing, where this system follows it, and where the two deliberately diverge.">
+<meta property="og:url" content="https://glados.aperture.institute/wiki/templeos.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TempleOS. What this project inherited from it">
+<meta name="twitter:description" content="What TempleOS got right about single address space computing, where this system follows it, and where the two deliberately diverge.">
+<meta property="og:image" content="https://glados.aperture.institute/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The GLaDOS aperture mark">
+<meta name="twitter:image" content="https://glados.aperture.institute/img/og.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../img/icon-180.png">
+<link rel="manifest" href="../site.webmanifest">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"GLaDOS","item":"https://glados.aperture.institute/"},{"@type":"ListItem","position":2,"name":"Wiki","item":"https://glados.aperture.institute/wiki/"},{"@type":"ListItem","position":3,"name":"TempleOS","item":"https://glados.aperture.institute/wiki/templeos.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"TempleOS. What this project inherited from it","description":"What TempleOS got right about single address space computing, where this system follows it, and where the two deliberately diverge.","url":"https://glados.aperture.institute/wiki/templeos.html","dateModified":"2026-08-30","keywords":"TempleOS, Terry Davis, HolyC, single address space, ring 0 operating system, God Says","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"GLaDOS","url":"https://glados.aperture.institute/"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="page">
+
+<!--masthead-->
+<div id="masthead">
+  <div class="titlebar"><a class="mark" href="../"><img src="../img/logo.svg" alt="" width="24" height="24"><span>Aperture Institute</span></a><span class="ctl" aria-hidden="true"><i></i><i></i><i class="x"></i></span></div>
+  <div class="addr"><span class="orb" aria-hidden="true"></span><span class="sub">GLaDOS: an operating system in Rust, with a language model in the kernel</span></div>
+</div>
+<!--/masthead-->
+
+<!--bar-->
+<div id="tabs"><ul><li><a href="../">Summary</a></li><li><a href="../download/">Download</a></li><li><a href="../news/">News</a></li><li class="on"><a href="../wiki/">Wiki</a></li><li><a href="../screenshots/">Screenshots</a></li><li><a href="../archive/">Archive</a></li><li><a href="../token/">Token</a></li><li><a href="../pool/">Pool</a></li><li><a href="https://github.com/IlumCI/GLaDOS" rel="noopener">Source code</a></li></ul></div>
+<!--/bar-->
+
+<div id="body">
+<!--sidebar-->
+<div id="sidebar">
+<div class="box"><div class="t">Latest release</div><div class="bd"><table class="facts"><tr><td>Version</td><td>1.4.5</td></tr><tr><td>Released</td><td>2026-11-18</td></tr><tr><td>Images</td><td>4</td></tr></table><ul><li><a href="../download/">Download</a></li><li><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.5">Release notes</a></li></ul></div></div>
+<div class="box"><div class="t">Project information</div><div class="bd"><table class="facts"><tr><td>Development status</td><td>3 - Alpha</td></tr><tr><td>Environment</td><td>Console, framebuffer</td></tr><tr><td>Intended audience</td><td>Developers, science/research</td></tr><tr><td>Licence</td><td>Other/proprietary, all rights reserved</td></tr><tr><td>Natural language</td><td>English</td></tr><tr><td>Operating system</td><td>x86-64 UEFI, bare metal</td></tr><tr><td>Programming language</td><td>Rust, Python</td></tr><tr><td>Topic</td><td>Operating systems, kernels, artificial intelligence</td></tr></table></div></div>
+<div class="box"><div class="t">Statistics</div><div class="bd"><table class="facts"><tr><td>Registered</td><td>2026-09-01</td></tr><tr><td>Releases</td><td>20</td></tr><tr><td>Downloads</td><td>644</td></tr><tr><td>Source</td><td>198 files, ~132,000 lines</td></tr></table></div></div>
+<div class="box"><div class="t">Developers</div><div class="bd"><table class="facts"><tr><td>IlumCI</td><td>project admin, developer</td></tr></table></div></div>
+<div class="box"><div class="t">Documentation</div><div class="bd"><ul><li><a href="../wiki/glados-os.html">GLaDOS OS</a></li><li><a href="../wiki/kernel.html">The kernel</a></li><li><a href="../wiki/model.html">The model</a></li><li><a href="../wiki/agent.html">The agent</a></li><li><a href="../wiki/rsi.html">Self-improvement</a></li><li><a href="../wiki/aiksi.html">Aiksi, the language</a></li><li><a href="../wiki/">All 18 articles</a></li></ul></div></div>
+</div>
+<!--/sidebar-->
+<div id="content">
+<div class="crumbs"><a href="../">GLaDOS</a> / <a href="../wiki/">Wiki</a> / TempleOS</div>
+<div id="main">
+<h1>TempleOS</h1>
+<figure class="fig"><img src="../img/wm/templeos.png" alt="A TempleOS desktop screenshot showing its text-mode interface" width="640" height="480" loading="lazy" decoding="async"><figcaption>TempleOS: 640×480, sixteen colours, one address space, everything at ring 0, and a compiler you could call from anywhere in the system.<span class="credit">VirtualBox TempleOS x64 27 02 2021 20 43 48.png. Terry A. Davis, TempleOS, via <a href="https://commons.wikimedia.org/wiki/File:VirtualBox_TempleOS_x64_27_02_2021_20_43_48.png" rel="noopener">Wikimedia Commons</a>.</span></figcaption></figure>
+<p>TempleOS ran everything in ring 0 in one address space, compiled its own language on the fly, and treated the whole machine as one programmable surface. It was dismissed for a long time as a curiosity. The architecture underneath was a serious position about what a personal computer could be when nobody has to be protected from anybody.</p>
+
+<h2 id="the-inheritance">The inheritance</h2>
+<p>Four things here come more or less directly from it.</p>
+<p><b>One address space, one privilege level.</b> The justification differs, because TempleOS wanted immediacy and this wants to remove a boundary that a language model would otherwise cross thousands of times per answer. The consequence is the same, and so are the risks.</p>
+<p><b>A system language that belongs to the system.</b> HolyC was the shell, the scripting language and the compiled language at once. Aiksi occupies the same position here: everything above the kernel is written in it, the shell evaluates it, and stored programs are the same artefacts the machine writes for itself.</p>
+<p><b>The graphics are simple on purpose.</b> A linear framebuffer, a fixed glyph, drawing that anybody can follow. There is no acceleration, and the compositor is a back buffer and a row-span diff.</p>
+<p><b>An oracle.</b> TempleOS drew words from a dictionary seeded by the timing of the operator's own hands. That entropy source is kept here, with keyboard and mouse interrupt timing folded into a sampler. The subject changed.</p>
+
+<h2 id="where-the-two-diverge">Where the two diverge</h2>
+<p>TempleOS was 640x480 at sixteen colours by choice, and this runs at whatever the graphics output protocol offers. TempleOS had no networking, and this has a full stack including TLS. TempleOS compiled HolyC to native code immediately, and Aiksi is a tree walker with a code generator that so far handles integer arithmetic and control flow and refuses everything else.</p>
+<p>The largest divergence is the oracle. Drawing random words and reading them as prophecy is the part of TempleOS that cannot be defended on any technical ground. The mechanism here fits a linear dynamical model to real telemetry, heap and task-switch rate and touch rate, then rolls the state forward under three interventions and plots the branches. It is a controlled linear system fitted from measurements. The first draft did generate prophetic words, and it was scrapped for exactly the reason this paragraph gives.</p>
+
+<h2 id="what-it-got-right">What it got right</h2>
+<p>That the boundary is a cost as well as a protection, and that a machine which is entirely yours can be organised around immediacy. Most of that argument was dismissed alongside everything else about its author, and most of it holds.</p>
+<p>The parts that turned out to be practical as well as philosophical are the ones this project leans on hardest. A tool call as a function call. A language whose programs are values the system can store, hash and reason about. A screen you can write to without asking anybody. None of those needed the theology, and all of them survive it.</p>
+<div class="seealso"><b>See also:</b> <a href="kernel.html">The kernel</a>, <a href="glados-os.html">GLaDOS OS</a>, <a href="gui.html">The desktop</a></div>
+</div>
+</div>
+</div>
+
+<!--footer-->
+<div id="footer">
+  <a class="start" href="../" aria-hidden="true" tabindex="-1"><img src="../img/logo.svg" alt="" width="30" height="30"></a>
+  <p>GLaDOS, Aperture Science and Portal are properties of Valve Corporation. This project is independent and is not affiliated with, endorsed by, or connected to Valve in any way.</p>
+  <p>Copyright 2026. All rights reserved. The source is published so it can be read; redistribution and derivatives need asking. What is not ours -- two vendored font crates, two typefaces, Intel's register layouts and Wi-Fi firmware, and the diagrams -- is listed on <a href="../credits.html">the credits page</a>.</p>
+  <p>No cookies, no analytics, no telemetry of any kind. Last updated 2026-11-18.</p>
+</div>
+<!--/footer-->
+
+</div>
+</body>
+</html>
