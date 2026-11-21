@@ -1,0 +1,93 @@
+# Floating point on a UEFI target, and why this is not the arrangement we want.
+#
+# The stock x86_64-unknown-uefi target declares:
+#
+#     "features":   "-mmx,-sse,+soft-float"
+#     "rustc-abi":  "softfloat"
+#
+# The second line is the awkward one. It is an *ABI* declaration, not a codegen
+# switch -- it says floats are passed in integer registers. So disabling
+# soft-float with `-C target-feature` below is, strictly, lying to the compiler
+# about its own ABI, and rustc now warns that this "will become a hard error in
+# a future release".
+#
+# It works today, and the semantics are actually sound for us: the stock target
+# picks softfloat because firmware makes no promise about FP state, and GLaDOS
+# makes that promise itself in cpu::enable_simd(), which sets CR4.OSFXSR before
+# a single float executes. Hardware float is also the normal Microsoft x64
+# convention (floats in xmm0-3), so this is closer to the real UEFI ABI, not
+# further from it. Nothing we hand to firmware takes a float argument.
+#
+# THE PROPER FIX IS ALREADY IN THE REPO: x86_64-glados.json, the stock spec with
+# SSE enabled and `rustc-abi: softfloat` removed. It cannot be used yet.
+# A custom target has no precompiled core, so it needs -Zbuild-std, and
+# build-std must compile compiler_builtins' *build script* -- a host binary.
+# This machine has no MSVC linker (rustup installed the msvc toolchain without
+# its prerequisites), no Windows SDK, and only 32-bit MinGW.org. There is
+# nothing here that can link a host executable.
+#
+# To switch over, install either:
+#   * Visual Studio Build Tools with the C++ workload and Windows SDK, or
+#   * mingw-w64, plus `rustup toolchain install nightly-x86_64-pc-windows-gnu`
+#
+# then delete the rustflags below and restore the [unstable] block:
+#     [build]
+#     target = "x86_64-glados.json"
+#     [unstable]
+#     json-target-spec = true
+#     build-std = ["core", "alloc", "compiler_builtins"]
+#     build-std-features = ["compiler-builtins-mem"]
+#
+# Until then this is a known fuse: a rustc release that promotes the warning to
+# an error breaks the build. Pin the toolchain in rust-toolchain.toml if that
+# becomes a real risk before the linker situation is resolved.
+
+[build]
+target = "x86_64-unknown-uefi"
+
+# **Under `[target.x86_64-unknown-uefi]` and not `[build]`, because these flags
+# are about this target and cargo has no way to take them back.**
+#
+# They sat under `[build]` and therefore reached every crate in the tree that
+# cargo walked up to this file from -- `pool/` and `miner/` both. Each of those
+# carries `rustflags = []` under a comment saying "cleared, not inherited", and
+# that is simply not how cargo merges config: **arrays are joined**, so an
+# empty list contributes nothing and the parent's flags survive intact. Proved
+# rather than reasoned about, with `cargo config get build.rustflags` run
+# inside `pool/`:
+#
+#     build.rustflags = ["-C", "target-feature=+sse,+sse2,-soft-float",
+#                        "-C", "link-arg=/MAP:target/glados.map"]
+#
+# `/MAP:` is an MSVC linker flag, which is right for `lld-link` on the UEFI
+# target and is a *filename* to `rust-lld -flavor gnu`. So the pool built
+# perfectly on this Windows machine, where `link.exe` accepts it and quietly
+# writes a map file, and could not link at all for musl:
+#
+#     rust-lld: error: cannot open /MAP:target/glados.map: No such file
+#
+# That is why `pool.yml` still failed after `3fe55bd` gave its tests
+# `--target`: the target was never the only thing leaking down. The escape
+# each sub-crate makes for `build.target` is real and necessary; the one it
+# thought it was making for `rustflags` never worked.
+#
+# AVX is deliberately absent from the list. Enabling it globally would let the
+# compiler emit AVX anywhere, including early boot before CR4.OSXSAVE and XCR0
+# are set, where every such instruction raises #UD. AVX is opted into per
+# function with #[target_feature], guarded by runtime detection.
+[target.x86_64-unknown-uefi]
+rustflags = [
+    "-C", "target-feature=+sse,+sse2,-soft-float",
+    "-C", "link-arg=/MAP:target/glados.map",
+]
+
+# **Crates come from `vendor/` and from nowhere else.** The exact sources that
+# were read and licence-checked are the ones compiled, a build needs no
+# network, and an update is a reviewable diff of `vendor/` rather than a
+# version number moving. See the policy in Cargo.toml. Harmless to `pool/` and
+# `miner/`, which walk up to this file and have no crates.io dependencies.
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
