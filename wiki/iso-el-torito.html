@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the ISO is built. El Torito, FAT32 and a reader to check it</title>
+<meta name="description" content="Building a bootable UEFI image by hand: the El Torito catalogue, why long file names are required, the FAT32 cluster floor, and reading the result back.">
+<meta name="keywords" content="El Torito, ISO 9660, UEFI boot ISO, FAT32, Joliet, bootable image, hybrid ISO">
+<link rel="canonical" href="https://glados.aperture.institute/wiki/iso-el-torito.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GLaDOS">
+<meta property="og:title" content="How the ISO is built. El Torito, FAT32 and a reader to check it">
+<meta property="og:description" content="Building a bootable UEFI image by hand: the El Torito catalogue, why long file names are required, the FAT32 cluster floor, and reading the result back.">
+<meta property="og:url" content="https://glados.aperture.institute/wiki/iso-el-torito.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How the ISO is built. El Torito, FAT32 and a reader to check it">
+<meta name="twitter:description" content="Building a bootable UEFI image by hand: the El Torito catalogue, why long file names are required, the FAT32 cluster floor, and reading the result back.">
+<meta property="og:image" content="https://glados.aperture.institute/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The GLaDOS aperture mark">
+<meta name="twitter:image" content="https://glados.aperture.institute/img/og.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../img/icon-180.png">
+<link rel="manifest" href="../site.webmanifest">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"GLaDOS","item":"https://glados.aperture.institute/"},{"@type":"ListItem","position":2,"name":"Wiki","item":"https://glados.aperture.institute/wiki/"},{"@type":"ListItem","position":3,"name":"How the ISO is built","item":"https://glados.aperture.institute/wiki/iso-el-torito.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"How the ISO is built. El Torito, FAT32 and a reader to check it","description":"Building a bootable UEFI image by hand: the El Torito catalogue, why long file names are required, the FAT32 cluster floor, and reading the result back.","url":"https://glados.aperture.institute/wiki/iso-el-torito.html","dateModified":"2026-08-30","keywords":"El Torito, ISO 9660, UEFI boot ISO, FAT32, Joliet, bootable image, hybrid ISO","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"GLaDOS","url":"https://glados.aperture.institute/"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="page">
+
+<!--masthead-->
+<div id="masthead">
+  <div class="titlebar"><a class="mark" href="../"><img src="../img/logo.svg" alt="" width="24" height="24"><span>Aperture Institute</span></a><span class="ctl" aria-hidden="true"><i></i><i></i><i class="x"></i></span></div>
+  <div class="addr"><span class="orb" aria-hidden="true"></span><span class="sub">GLaDOS: an operating system in Rust, with a language model in the kernel</span></div>
+</div>
+<!--/masthead-->
+
+<!--bar-->
+<div id="tabs"><ul><li><a href="../">Summary</a></li><li><a href="../download/">Download</a></li><li><a href="../news/">News</a></li><li class="on"><a href="../wiki/">Wiki</a></li><li><a href="../screenshots/">Screenshots</a></li><li><a href="../archive/">Archive</a></li><li><a href="../token/">Token</a></li><li><a href="../pool/">Pool</a></li><li><a href="https://github.com/IlumCI/GLaDOS" rel="noopener">Source code</a></li></ul></div>
+<!--/bar-->
+
+<div id="body">
+<!--sidebar-->
+<div id="sidebar">
+<div class="box"><div class="t">Latest release</div><div class="bd"><table class="facts"><tr><td>Version</td><td>1.4.5</td></tr><tr><td>Released</td><td>2026-11-18</td></tr><tr><td>Images</td><td>4</td></tr></table><ul><li><a href="../download/">Download</a></li><li><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.5">Release notes</a></li></ul></div></div>
+<div class="box"><div class="t">Project information</div><div class="bd"><table class="facts"><tr><td>Development status</td><td>3 - Alpha</td></tr><tr><td>Environment</td><td>Console, framebuffer</td></tr><tr><td>Intended audience</td><td>Developers, science/research</td></tr><tr><td>Licence</td><td>Other/proprietary, all rights reserved</td></tr><tr><td>Natural language</td><td>English</td></tr><tr><td>Operating system</td><td>x86-64 UEFI, bare metal</td></tr><tr><td>Programming language</td><td>Rust, Python</td></tr><tr><td>Topic</td><td>Operating systems, kernels, artificial intelligence</td></tr></table></div></div>
+<div class="box"><div class="t">Statistics</div><div class="bd"><table class="facts"><tr><td>Registered</td><td>2026-09-01</td></tr><tr><td>Releases</td><td>20</td></tr><tr><td>Downloads</td><td>644</td></tr><tr><td>Source</td><td>198 files, ~132,000 lines</td></tr></table></div></div>
+<div class="box"><div class="t">Developers</div><div class="bd"><table class="facts"><tr><td>IlumCI</td><td>project admin, developer</td></tr></table></div></div>
+<div class="box"><div class="t">Documentation</div><div class="bd"><ul><li><a href="../wiki/glados-os.html">GLaDOS OS</a></li><li><a href="../wiki/kernel.html">The kernel</a></li><li><a href="../wiki/model.html">The model</a></li><li><a href="../wiki/agent.html">The agent</a></li><li><a href="../wiki/rsi.html">Self-improvement</a></li><li><a href="../wiki/aiksi.html">Aiksi, the language</a></li><li><a href="../wiki/">All 18 articles</a></li></ul></div></div>
+</div>
+<!--/sidebar-->
+<div id="content">
+<div class="crumbs"><a href="../">GLaDOS</a> / <a href="../wiki/">Wiki</a> / How the ISO is built</div>
+<div id="main">
+<h1>How the ISO is built</h1>
+<figure class="fig"><img src="../img/wm/compact-disc.svg" alt="Diagram of the layers of a compact disc" width="500" height="500" loading="lazy" decoding="async"><figcaption>ISO 9660 was designed for physical media like this. The format long outlived the medium, and El Torito is the 1995 extension that taught it to boot.<span class="credit">OD Compact disc.svg. The original uploader was Sakurambo~commonswiki at Wikimedia Commons., CC BY-SA 2.5, via <a href="https://commons.wikimedia.org/wiki/File:OD_Compact_disc.svg" rel="noopener">Wikimedia Commons</a>.</span></figcaption></figure>
+<p>The distributable image is written by a script in this tree, which was worth doing because the failure modes are otherwise opaque.</p>
+
+<h2 id="how-uefi-boots-an-optical-disc">How UEFI boots an optical disc</h2>
+<p>Firmware does not read the ISO 9660 filesystem to find a boot loader. It reads the El Torito boot catalogue, finds an entry marked as a UEFI platform, and treats the extent that entry points at as a FAT filesystem image. It then looks inside that image for the usual boot path.</p>
+<p>So a bootable image contains a whole FAT partition as a file, and the ISO around it exists mostly to be a container the firmware knows how to open.</p>
+
+<h2 id="long-file-names-are-not-optional">Long file names are not optional</h2>
+<p>Plain ISO 9660 restricts names to eight characters, a dot, and three more, in upper case. The path the firmware looks for does not fit, so the image carries a Joliet extension with the real names in UCS-2.</p>
+<p>Omitting it gives an image that mounts fine on a desktop operating system, which will happily read the Joliet names or fall back gracefully, and does not boot, because the firmware finds nothing at the path it wants.</p>
+
+<h2 id="fat32-has-a-floor">FAT32 has a floor</h2>
+<p>FAT32 is defined by cluster count. Below 65,525 clusters the filesystem is FAT16 by definition, whatever the header claims, and a driver following the specification will read it as FAT16 and find nothing.</p>
+<p>A small embedded image therefore has to either use a small enough cluster size to clear the floor or be padded until it does. Getting that wrong produces an image that some drivers read and others do not, which is a worse outcome than one that fails everywhere.</p>
+
+<h2 id="why-write-a-fat-reader-as-well">Why write a FAT reader as well</h2>
+<p>Because a writer with no reader is a writer nobody can check. The same tooling reads the image back, walks the directory, and asserts that the boot path is present with the expected size. That has caught a wrong cluster count, a missing Joliet tree and an off-by-one in the boot catalogue, each of which would otherwise have presented as a machine that does not boot with no further information.</p>
+<p>The same FAT writer builds the emulator's test partition, so the code path is exercised by ordinary development.</p>
+
+<h2 id="verifying-the-result">Verifying the result</h2>
+<p>Every published image has a checksum file beside it. The largest is the 2B distill at about 1.9 GB, and the smallest carries no model at all for anybody who wants to supply their own. Booting the image under emulation before publishing it is one command, and it is the last step of building one.</p>
+<div class="seealso"><b>See also:</b> <a href="kernel.html">The kernel</a>, <a href="devices.html">Devices and storage</a>, <a href="testing.html">Testing without a test runner</a>, <a href="model.html">The model</a></div>
+</div>
+</div>
+</div>
+
+<!--footer-->
+<div id="footer">
+  <a class="start" href="../" aria-hidden="true" tabindex="-1"><img src="../img/logo.svg" alt="" width="30" height="30"></a>
+  <p>GLaDOS, Aperture Science and Portal are properties of Valve Corporation. This project is independent and is not affiliated with, endorsed by, or connected to Valve in any way.</p>
+  <p>Copyright 2026. All rights reserved. The source is published so it can be read; redistribution and derivatives need asking. What is not ours -- two vendored font crates, two typefaces, Intel's register layouts and Wi-Fi firmware, and the diagrams -- is listed on <a href="../credits.html">the credits page</a>.</p>
+  <p>No cookies, no analytics, no telemetry of any kind. Last updated 2026-11-18.</p>
+</div>
+<!--/footer-->
+
+</div>
+</body>
+</html>

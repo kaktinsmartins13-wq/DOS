@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The desktop. Frutiger Aero in Aperture's colours, composed and diffed</title>
+<meta name="description" content="A window manager in glass and gradients, a compositor that diffs row spans, and the measurement that found the console was most of a frame.">
+<meta name="keywords" content="Frutiger Aero, window manager, compositor, framebuffer, desktop environment, gradient interface">
+<link rel="canonical" href="https://glados.aperture.institute/wiki/gui.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GLaDOS">
+<meta property="og:title" content="The desktop. Frutiger Aero in Aperture's colours, composed and diffed">
+<meta property="og:description" content="A window manager in glass and gradients, a compositor that diffs row spans, and the measurement that found the console was most of a frame.">
+<meta property="og:url" content="https://glados.aperture.institute/wiki/gui.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The desktop. Frutiger Aero in Aperture's colours, composed and diffed">
+<meta name="twitter:description" content="A window manager in glass and gradients, a compositor that diffs row spans, and the measurement that found the console was most of a frame.">
+<meta property="og:image" content="https://glados.aperture.institute/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The GLaDOS aperture mark">
+<meta name="twitter:image" content="https://glados.aperture.institute/img/og.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../img/icon-180.png">
+<link rel="manifest" href="../site.webmanifest">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"GLaDOS","item":"https://glados.aperture.institute/"},{"@type":"ListItem","position":2,"name":"Wiki","item":"https://glados.aperture.institute/wiki/"},{"@type":"ListItem","position":3,"name":"The desktop","item":"https://glados.aperture.institute/wiki/gui.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"The desktop. Frutiger Aero in Aperture's colours, composed and diffed","description":"A window manager in glass and gradients, a compositor that diffs row spans, and the measurement that found the console was most of a frame.","url":"https://glados.aperture.institute/wiki/gui.html","dateModified":"2026-08-30","keywords":"Frutiger Aero, window manager, compositor, framebuffer, desktop environment, gradient interface","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"GLaDOS","url":"https://glados.aperture.institute/"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="page">
+
+<!--masthead-->
+<div id="masthead">
+  <div class="titlebar"><a class="mark" href="../"><img src="../img/logo.svg" alt="" width="24" height="24"><span>Aperture Institute</span></a><span class="ctl" aria-hidden="true"><i></i><i></i><i class="x"></i></span></div>
+  <div class="addr"><span class="orb" aria-hidden="true"></span><span class="sub">GLaDOS: an operating system in Rust, with a language model in the kernel</span></div>
+</div>
+<!--/masthead-->
+
+<!--bar-->
+<div id="tabs"><ul><li><a href="../">Summary</a></li><li><a href="../download/">Download</a></li><li><a href="../news/">News</a></li><li class="on"><a href="../wiki/">Wiki</a></li><li><a href="../screenshots/">Screenshots</a></li><li><a href="../archive/">Archive</a></li><li><a href="../token/">Token</a></li><li><a href="../pool/">Pool</a></li><li><a href="https://github.com/IlumCI/GLaDOS" rel="noopener">Source code</a></li></ul></div>
+<!--/bar-->
+
+<div id="body">
+<!--sidebar-->
+<div id="sidebar">
+<div class="box"><div class="t">Latest release</div><div class="bd"><table class="facts"><tr><td>Version</td><td>1.4.5</td></tr><tr><td>Released</td><td>2026-11-18</td></tr><tr><td>Images</td><td>4</td></tr></table><ul><li><a href="../download/">Download</a></li><li><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.5">Release notes</a></li></ul></div></div>
+<div class="box"><div class="t">Project information</div><div class="bd"><table class="facts"><tr><td>Development status</td><td>3 - Alpha</td></tr><tr><td>Environment</td><td>Console, framebuffer</td></tr><tr><td>Intended audience</td><td>Developers, science/research</td></tr><tr><td>Licence</td><td>Other/proprietary, all rights reserved</td></tr><tr><td>Natural language</td><td>English</td></tr><tr><td>Operating system</td><td>x86-64 UEFI, bare metal</td></tr><tr><td>Programming language</td><td>Rust, Python</td></tr><tr><td>Topic</td><td>Operating systems, kernels, artificial intelligence</td></tr></table></div></div>
+<div class="box"><div class="t">Statistics</div><div class="bd"><table class="facts"><tr><td>Registered</td><td>2026-09-01</td></tr><tr><td>Releases</td><td>20</td></tr><tr><td>Downloads</td><td>644</td></tr><tr><td>Source</td><td>198 files, ~132,000 lines</td></tr></table></div></div>
+<div class="box"><div class="t">Developers</div><div class="bd"><table class="facts"><tr><td>IlumCI</td><td>project admin, developer</td></tr></table></div></div>
+<div class="box"><div class="t">Documentation</div><div class="bd"><ul><li><a href="../wiki/glados-os.html">GLaDOS OS</a></li><li><a href="../wiki/kernel.html">The kernel</a></li><li><a href="../wiki/model.html">The model</a></li><li><a href="../wiki/agent.html">The agent</a></li><li><a href="../wiki/rsi.html">Self-improvement</a></li><li><a href="../wiki/aiksi.html">Aiksi, the language</a></li><li><a href="../wiki/">All 18 articles</a></li></ul></div></div>
+</div>
+<!--/sidebar-->
+<div id="content">
+<div class="crumbs"><a href="../">GLaDOS</a> / <a href="../wiki/">Wiki</a> / The desktop</div>
+<div id="main">
+<h1>The desktop</h1>
+<p>The look is Frutiger Aero in Aperture's colours, and it was Windows 98 over 3.1 until 1.3.0. Aqua, glass and saturation are the era's; the orange is the sign over the door. One rule keeps them apart: the surfaces the machine speaks through are warm &mdash; captions, selection, links, focus &mdash; and the room it sits in is cool, being wallpaper, taskbar glass, fields and menus. The wall is where they meet, a horizon running from deep water to gold with the Aperture mark lit as the sun on it.</p>
+
+<h2 id="composed-then-diffed">Composed, then diffed</h2>
+<p>Every repaint draws everything: wallpaper, icons, and every window back to front, into a heap back buffer. Presenting then writes to the framebuffer only the row spans that differ from a shadow copy of what is already on screen.</p>
+<p>Total repaint keeps the window manager obviously correct, because there is no incremental state to get wrong. The diff is why nothing flickers and why hover feedback on pointer motion is affordable at all. The console bypasses the next present through a direct rectangle flush so that shell output stays immediate, and both paths update the shadow, so they cannot disagree about what is on screen.</p>
+
+<h2 id="the-window-manager-and-its-one-idea">The window manager, and its one idea</h2>
+<p>Every layout the pointer hit-tests is the same function the paint pass draws from. A control that highlights in one place and activates in another is the class of bug that arrangement forbids by construction.</p>
+<p>Everything the pointer does, a keystroke also does. That is not an accessibility gesture. Serial cannot inject mouse packets, so a control with no typed equivalent cannot be driven headlessly and therefore never gets tested.</p>
+
+<h2 id="four-lessons-already-paid-for">Four lessons already paid for</h2>
+<p>Opening an application returns focus to the terminal. The desktop takes every key while a non-terminal window has focus, so an application that kept focus ate the next command line. Minesweeper consumed one a byte at a time and flagged a cell on the letter f.</p>
+<p>Alt-Tab swaps the top two windows and does not rotate. Rotating made a second press land on a third window, and both scripts and habit need over-and-back to be two presses.</p>
+<p>Relative pointer moves must stay within 255 per axis. Larger deltas set the overflow bit and the driver correctly discards the packet, so the pointer does not move at all, which reads as a dead drag.</p>
+<p>The glyph is eight pixels tall and doubled for chrome, which makes the title bar 30 and the caption buttons 21 square. Choreographing clicks from remembered metrics, with no press trace to check them against cost two full test cycles aimed forty pixels wide of the close box.</p>
+
+<h2 id="a-measurement-that-overturned-the-plan">A measurement that overturned the plan</h2>
+<p>A survey of the renderer ranked several changes by expected benefit. The measured results disagreed with almost all of it.</p>
+<p>The console turned out to be the dominant cost of a frame at 1,672 us of 2,376. The reason was that a blank cell rendered an eight by eight glyph like any other, writing sixty-four scaled pixels of background one at a time, under a background the desktop had just filled with a bulk span fill. About 1.2 million per-pixel stores a frame, nearly all of them writing the colour already there. Painting the background once and then only cells with something in them took the console to 592 us and the frame to 1,629 us, for identical output.</p>
+<p>The survey had missed it because it was looking for per-cell dirty tracking, which the full repaint defeats. The redundancy was never in repainting unchanged cells. It was in painting nothing, pixel by pixel.</p>
+<p>Damage-rectangle presenting was measured and declined. Comparing the buffers costs 264 us of a 1,629 us frame over 4 MB, which is already at memory bandwidth, and skipping rows requires knowing which rows changed while the draw pass repaints everything unconditionally. Two other changes were kept despite measuring flat, because they are strictly less work for identical output, and recorded because the survey had called one of them the single largest constant-factor loss.</p>
+<div class="seealso"><b>See also:</b> <a href="glados-os.html">GLaDOS OS</a>, <a href="aperture-science.html">Aperture Science</a>, <a href="templeos.html">TempleOS</a>, <a href="testing.html">Testing without a test runner</a></div>
+</div>
+</div>
+</div>
+
+<!--footer-->
+<div id="footer">
+  <a class="start" href="../" aria-hidden="true" tabindex="-1"><img src="../img/logo.svg" alt="" width="30" height="30"></a>
+  <p>GLaDOS, Aperture Science and Portal are properties of Valve Corporation. This project is independent and is not affiliated with, endorsed by, or connected to Valve in any way.</p>
+  <p>Copyright 2026. All rights reserved. The source is published so it can be read; redistribution and derivatives need asking. What is not ours -- two vendored font crates, two typefaces, Intel's register layouts and Wi-Fi firmware, and the diagrams -- is listed on <a href="../credits.html">the credits page</a>.</p>
+  <p>No cookies, no analytics, no telemetry of any kind. Last updated 2026-11-18.</p>
+</div>
+<!--/footer-->
+
+</div>
+</body>
+</html>

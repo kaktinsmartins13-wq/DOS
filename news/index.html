@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GLaDOS news and release history</title>
+<meta name="description" content="Release history for GLaDOS, the ring-0 Rust operating system with a language model in the kernel. Every release, newest first, with what changed in each.">
+<meta name="keywords" content="GLaDOS news, GLaDOS releases, GLaDOS changelog, Rust OS release history">
+<link rel="canonical" href="https://glados.aperture.institute/news/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GLaDOS">
+<meta property="og:title" content="GLaDOS news and release history">
+<meta property="og:description" content="Release history for GLaDOS, the ring-0 Rust operating system with a language model in the kernel. Every release, newest first, with what changed in each.">
+<meta property="og:url" content="https://glados.aperture.institute/news/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GLaDOS news and release history">
+<meta name="twitter:description" content="Release history for GLaDOS, the ring-0 Rust operating system with a language model in the kernel. Every release, newest first, with what changed in each.">
+<meta property="og:image" content="https://glados.aperture.institute/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The GLaDOS aperture mark">
+<meta name="twitter:image" content="https://glados.aperture.institute/img/og.png">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../img/icon-180.png">
+<link rel="manifest" href="../site.webmanifest">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"GLaDOS","item":"https://glados.aperture.institute/"},{"@type":"ListItem","position":2,"name":"News","item":"https://glados.aperture.institute/news/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="page">
+
+<!--masthead-->
+<div id="masthead">
+  <div class="titlebar"><a class="mark" href="../"><img src="../img/logo.svg" alt="" width="24" height="24"><span>Aperture Institute</span></a><span class="ctl" aria-hidden="true"><i></i><i></i><i class="x"></i></span></div>
+  <div class="addr"><span class="orb" aria-hidden="true"></span><span class="sub">GLaDOS: an operating system in Rust, with a language model in the kernel</span></div>
+</div>
+<!--/masthead-->
+
+<!--bar-->
+<div id="tabs"><ul><li><a href="../">Summary</a></li><li><a href="../download/">Download</a></li><li class="on"><a href="../news/">News</a></li><li><a href="../wiki/">Wiki</a></li><li><a href="../screenshots/">Screenshots</a></li><li><a href="../archive/">Archive</a></li><li><a href="../token/">Token</a></li><li><a href="../pool/">Pool</a></li><li><a href="https://github.com/IlumCI/GLaDOS" rel="noopener">Source code</a></li></ul></div>
+<!--/bar-->
+
+<div id="body">
+<!--sidebar-->
+<div id="sidebar">
+<div class="box"><div class="t">Latest release</div><div class="bd"><table class="facts"><tr><td>Version</td><td>1.4.5</td></tr><tr><td>Released</td><td>2026-11-18</td></tr><tr><td>Images</td><td>4</td></tr></table><ul><li><a href="../download/">Download</a></li><li><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.5">Release notes</a></li></ul></div></div>
+<div class="box"><div class="t">Project information</div><div class="bd"><table class="facts"><tr><td>Development status</td><td>3 - Alpha</td></tr><tr><td>Environment</td><td>Console, framebuffer</td></tr><tr><td>Intended audience</td><td>Developers, science/research</td></tr><tr><td>Licence</td><td>Other/proprietary, all rights reserved</td></tr><tr><td>Natural language</td><td>English</td></tr><tr><td>Operating system</td><td>x86-64 UEFI, bare metal</td></tr><tr><td>Programming language</td><td>Rust, Python</td></tr><tr><td>Topic</td><td>Operating systems, kernels, artificial intelligence</td></tr></table></div></div>
+<div class="box"><div class="t">Statistics</div><div class="bd"><table class="facts"><tr><td>Registered</td><td>2026-09-01</td></tr><tr><td>Releases</td><td>20</td></tr><tr><td>Downloads</td><td>644</td></tr><tr><td>Source</td><td>198 files, ~132,000 lines</td></tr></table></div></div>
+<div class="box"><div class="t">Developers</div><div class="bd"><table class="facts"><tr><td>IlumCI</td><td>project admin, developer</td></tr></table></div></div>
+<div class="box"><div class="t">Documentation</div><div class="bd"><ul><li><a href="../wiki/glados-os.html">GLaDOS OS</a></li><li><a href="../wiki/kernel.html">The kernel</a></li><li><a href="../wiki/model.html">The model</a></li><li><a href="../wiki/agent.html">The agent</a></li><li><a href="../wiki/rsi.html">Self-improvement</a></li><li><a href="../wiki/aiksi.html">Aiksi, the language</a></li><li><a href="../wiki/">All 18 articles</a></li></ul></div></div>
+</div>
+<!--/sidebar-->
+<div id="content">
+<div class="crumbs"><a href="../">GLaDOS</a> / News</div>
+<div id="main">
+<h1>News and release history</h1>
+<p>Every release, newest first. Each entry carries the opening of its own release note; the full note lives on GitHub, because a news column that reproduces a page of notes per entry is not a news column.</p>
+
+<h2 class="sect">Releases</h2>
+<div class="panel">
+<!--news-all-->
+<div class="news">
+  <div class="nh"><span class="nd">2026-11-18</span> v1.4.5</div>
+  <p>GLaDOS is an operating system with a language model living inside its kernel. Rust, from nothing, on real hardware. No Linux underneath it and no wall between the model and the machine.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.5">Release notes</a> &middot; 4 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-11-09</span> v1.4.4</div>
+  <p>GLaDOS is an operating system with a language model living inside its kernel. Rust, from nothing, on real hardware. No Linux underneath it and no wall between the model and the machine.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.4">Release notes</a> &middot; 2 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-10-24</span> v1.4.3</div>
+  <p>GLaDOS is an operating system with a language model living inside its kernel. Rust, from nothing, on real hardware. No Linux underneath it and no wall between the model and the machine.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.3">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-10-13</span> v1.4.2</div>
+  <p>GLaDOS is an operating system with a language model living inside its kernel. Rust, from nothing, on real hardware. No Linux underneath it and no wall between the model and the machine.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.2">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-10-10</span> v1.4.1</div>
+  <p>GLaDOS is an operating system with a language model living inside its kernel. It is written from nothing in Rust, it boots on real hardware, and there is no Linux underneath it and no wall between the model and the machine. A thought the model has is a function call. It boots, it decides, it rewrites its own source...</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.1">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-10-08</span> v1.4.0</div>
+  <p>GLaDOS is an operating system with a language model living inside its kernel. It is written from nothing in Rust, it runs on one real laptop, and there is no Linux underneath it and no wall between the model and the machine. A thought the model has is a function call. It boots, it decides, it rewrites its own...</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.4.0">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-10-01</span> GLaDOS miner 1.3.10</div>
+  <p>Your spare PC can mine $GLaDOS tonight, and now it can mine real-world assets too. Boot the miner, give it your wallet, pick what you want to be paid in, and walk away: $GLaDOS, NVIDIA, SpaceX, a basket of chip makers, or gold, silver and oil. It all lands straight in your wallet. Nothing to claim, nothing to install.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/mining-v1.3.10">Release notes</a> &middot; 1 image</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-30</span> v1.3.9</div>
+  <p>The biggest release yet. GLaDOS can now mine $GLaDOS, straight from its own kernel, and it has its own pool that pays miners automatically.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.9">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-30</span> GLaDOS miner 1.3.9</div>
+  <p>Your spare PC can mine $GLaDOS tonight. Boot the miner, give it your wallet, and walk away. The pool turns everything it earns into $GLaDOS and sends it straight to your wallet. Nothing to claim, nothing to install.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/mining-v1.3.9">Release notes</a> &middot; 1 image</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-21</span> v1.3.8</div>
+  <p>Eighty-two commits. This release is mostly about the machine&#x27;s ability to judge itself: a second self-improvement loop that lives in CI, a measuring apparatus that turned out to have been lying for months, and a training objective that was designed, refuted and replaced without ever being adopted.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.8">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-16</span> GLaDOS 1.3.7</div>
+  <p>Forty-two commits. Mostly this release is about giving the model things it did not have: somewhere to look things up, a radio to talk over, and a language underneath it that can do exact arithmetic.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.7">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-12</span> GLaDOS 1.3.6 -- it mines, and it repairs itself</div>
+  <p>A hundred and thirty-nine commits since 1.3.5, and two of them are the release. The kernel mines several coins at once against a pool that exists and is deployed. And on the day it first booted on real hardware it died of a thermometer, so it now survives its own selftests, diagnoses what broke, and fixes it...</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.6">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-07</span> v1.3.5</div>
+  <p>No summary was recorded for this release.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.5">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-05</span> v1.3.4</div>
+  <p>Nine commits since 1.3.3, and <code>git diff v1.3.3 v1.3.4 -- src/</code> is 1,439 insertions across 10 files. One subject, and it is the one the whole of <code>src/linux/</code> was built to reach: <strong>an unmodified static binary, downloaded from busybox.net and touched by nothing here, runs at ring 3 in a kernel with one address space.</strong></p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.4">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-04</span> v1.3.3</div>
+  <p>No summary was recorded for this release.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.3">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-04</span> v1.3.2</div>
+  <p>No summary was recorded for this release.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.2">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-03</span> v1.3.1</div>
+  <p>No summary was recorded for this release.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.1">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-02</span> v1.3.0</div>
+  <p>A from-scratch, ring-0 UEFI operating system in Rust, built around a language model that lives <strong>inside the kernel</strong> — no user/kernel split, no syscalls, one address space. A tool call from the model is a function call.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.3.0">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-01</span> GLaDOS 1.2.30</div>
+  <p><strong>The kernel is unchanged.</strong> <code>git diff v1.2.29 HEAD -- src/</code> is empty: this image differs from 1.2.29 by its version string and nothing else. If you are running 1.2.29 there is no reason to update.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.2.30">Release notes</a> &middot; 3 images</p>
+</div>
+<div class="news">
+  <div class="nh"><span class="nd">2026-09-01</span> GLaDOS 1.2.29</div>
+  <p>A correctness release. One real bug, one new diagnostic, two report-only verbs.</p>
+  <p class="nl"><a href="https://github.com/IlumCI/GLaDOS/releases/tag/v1.2.29">Release notes</a> &middot; 1 image</p>
+</div>
+<!--/news-all-->
+</div>
+
+<h2 class="sect">How versions work here</h2>
+<div class="panel">
+<p>Images are named for the release that built them, so <code>glados-1.2.27.iso</code> and <code>glados-1.2.26.iso</code> can sit in the same folder without one silently overwriting the other. That naming arrived at 1.2.26 and immediately broke every download link on this site, which had been written against the older unversioned names and went on describing them confidently for two releases. The download table is generated from the release list now, and <code>tools/site.py --check</code> fetches every link it offers.</p>
+<p>Releases before 1.2.26 carry unversioned image names and fewer images: the 8k and 32k context variants did not exist, and neither did the 2B model before 1.1.0.</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<!--footer-->
+<div id="footer">
+  <a class="start" href="../" aria-hidden="true" tabindex="-1"><img src="../img/logo.svg" alt="" width="30" height="30"></a>
+  <p>GLaDOS, Aperture Science and Portal are properties of Valve Corporation. This project is independent and is not affiliated with, endorsed by, or connected to Valve in any way.</p>
+  <p>Copyright 2026. All rights reserved. The source is published so it can be read; redistribution and derivatives need asking. What is not ours -- two vendored font crates, two typefaces, Intel's register layouts and Wi-Fi firmware, and the diagrams -- is listed on <a href="../credits.html">the credits page</a>.</p>
+  <p>No cookies, no analytics, no telemetry of any kind. Last updated 2026-11-18.</p>
+</div>
+<!--/footer-->
+
+</div>
+</body>
+</html>

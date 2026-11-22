@@ -1,0 +1,166 @@
+[Unit]
+# The same daemon, for a machine where you are not root.
+#
+# Install to ~/.config/systemd/user/ and run with `systemctl --user`. The
+# daemon genuinely does not need privilege: it binds a port above 1024, writes
+# one directory, and reads nothing it did not create. Being unable to sudo
+# costs enforcement, not function.
+#
+# **Run `loginctl enable-linger $USER` or this dies when you log out.** A user
+# service without lingering is stopped with the session, which presents as a
+# pool that works perfectly while you are watching it and is gone in the
+# morning. It is the single thing most likely to go wrong here.
+Description=GLaDOS multi-coin mining pool (user)
+Documentation=https://github.com/IlumCI/GLaDOS/blob/main/design/pool.md
+After=network-online.target
+
+[Service]
+Type=simple
+
+# **`run-pool.sh` is the source of truth for this argv and this file drifted
+# from it.** Everything below but `--listen` and `--ledger` was missing, and the
+# absence that mattered was `--window`: without it the pool falls back to
+# `DEFAULT_WINDOW_WORK`, which `design/live36.md` measures at **five seconds of
+# mining** at twenty bits and 256 miners, and calls the one thing that has to
+# change before an event. PPLNS pays the last N units of work, so everybody who
+# mined for thirty-six hours and stopped six seconds before a block got nothing.
+# That value shipped in this file the whole time.
+#
+# The settings and where each comes from:
+#
+#     --window 70368744177664   2^46, about 0.80 of a Bitzeny block. Chosen for
+#                               bitzeny and meaningless against testnet, whose
+#                               difficulty swings under the 20-minute rule; the
+#                               payout line prints what it is worth on each.
+#                               **For a bounded event, pay from the tally
+#                               instead** -- `distribute.py --basis tally` does
+#                               not read this at all, and `design/runbook.md`
+#                               step 5 says tally is the answer for an event.
+#     --cpu-percent 25          the total validation budget as a share of one
+#                               core, which is what bounds a flood: the
+#                               per-connection limit never summed.
+#     --share-seconds 45        makes yespower affordable at that budget
+#     --max-connections 900     measured at 850: 852 threads, 21 MB, load 1.25
+#     --roster / --roster-url   answer "can this name be paid" at the greeting
+#
+# **`--require-roster` is absent deliberately.** It refuses an unregistered name
+# at the greeting, which is a statement that a roster exists, and
+# `supabase/functions/worker` has to be deployed and answering first. The pool
+# fails *open* on an unreadable roster either way and says so at startup.
+#
+# **And nothing here refreshes the roster.** `run-pool.sh` carries a background
+# loop for it because the host it was deployed to has neither cron nor
+# lingering; under systemd the answer is a user timer, which needs the user
+# manager that lingering keeps alive. So on a box where these units can run at
+# all, add the timer -- and on one where they cannot, use the script.
+#
+# **No upstream.** A coin spec grows `@host:port,user,pass`, and at zpool -- the
+# wallet-as-username auto-exchange pool `design/mining.md` item 8 says to point
+# at, and the only anonymous one of its kind still operating -- the username *is*
+# the payout address, so a placeholder left here mines to whoever owns it. Not
+# a solo pool and not sha256d: this is where a CPU is a real participant. See
+# `run-pool.sh` for the form and the reason it is empty.
+#
+# **The algorithm is `yescrypt` and it was `yespower-10-2048-8`**, which is the
+# one line here that is worth money. `design/mining.md` measured zpool's own
+# `actual_last24h`: yespower's entire network pays **$3/day** to everybody mining
+# it, so a miner taking all of it earns three dollars and no amount of hardware
+# moves that. yescrypt's pays about **$21,600/day** across a 1.7 MH/s network.
+# Same family, same 2 MiB working set, and `--bench` on a 12th-gen i7 reads
+# 3,557 us a share against yespower's 3,520 -- so nothing about the cost of
+# verifying it changes, and neither `--share-seconds 45` nor the twelve bits
+# needs revisiting. It is a different string, not a different machine.
+#
+# `yescrypt` is `Yespower { v10: false, n: 2048, r: 8, pers: None }` and is one
+# of four aliases `parse_algo` byte-verifies against upstream's TESTS-OK. Note
+# it is **not** BitZeny's, which is `yescryptr8` -- the "Client Key"
+# personalisation makes those different functions at identical N and r, and the
+# label `bitzeny` on a `yescrypt` port would have named a coin this no longer
+# mines.
+#
+# The label is the *algorithm* rather than a coin because at zpool it is an
+# algorithm port paid in BTC, which is the form the upstream line in
+# `run-pool.sh` already documents. It has no row in `tools/prices.py`, so
+# `--prices` will say it does not know what it is worth; that is honest and is
+# what "no price file" already prints.
+ExecStart=%h/.local/bin/glados-pool \
+    --listen 0.0.0.0:3334 \
+    --ledger %S/glados-pool/ledger.json \
+    --roster %S/glados-pool/roster.json \
+    --roster-url https://glados.aperture.institute/pool/ \
+    --cpu-percent 25 \
+    --share-seconds 45 \
+    --max-connections 900 \
+    --window 70368744177664 \
+    yescrypt:yescrypt:12 \
+    testnet:sha256d:24
+
+Restart=always
+RestartSec=5s
+
+StateDirectory=glados-pool
+
+# --- limits, and what is different about them here ---
+#
+# The figures are the system unit's and the reasoning is identical: 3.49 MB
+# resident plus at most one 8,296 KiB working set live at a time, because
+# validation happens under a mutex and is therefore serialised.
+#
+# **Whether these are enforced is not up to this file.** A user manager only
+# applies MemoryMax and CPUQuota when the controllers are delegated to it, and
+# on many distributions CPU is not delegated by default. Check rather than
+# assume:
+#
+#     cat /sys/fs/cgroup/user.slice/user-$(id -u).slice/cgroup.controllers
+#
+# If `memory` and `cpu` are absent, these lines are documentation. The daemon
+# still behaves -- the numbers above are what it actually uses, not what it is
+# being held to -- but nothing is stopping a bug, so watch it for a day.
+MemoryMax=64M
+MemoryHigh=48M
+CPUQuota=50%
+# **`TasksMax` has to clear `--max-connections`, and it did not.** Each connection
+# costs one thread, so 900 of them plus the listener, the reporter and the roster
+# re-reader is about 903 tasks against a cap of 512 -- and the pool cannot catch
+# it the way it catches the descriptor limit, because that one it can read and a
+# cgroup task cap it cannot. What that buys is a pool that refuses connections at
+# about 509 for a reason nothing in its own log explains.
+#
+# 1024, which is `live800.md`'s measured 852 threads at 850 connections with room
+# above it rather than a number chosen to be round. The two settings are a pair
+# and moving one means moving the other.
+TasksMax=1024
+
+# **Descriptors, which this unit did not raise and the script does.** Every
+# connection is one and the login default is 1024, so the ceiling could not
+# usefully pass about a thousand however `--max-connections` was set -- a limit
+# that reads as absent rather than as wrong. The hard limit is 524288 and
+# raising the soft limit needs no privilege, which is why `run-pool.sh` does it
+# with a plain `ulimit`. The daemon reads the real limit and clamps its own
+# ceiling to it, so getting this wrong is a smaller pool and not a failure.
+LimitNOFILE=65536
+
+# --- hardening that a user manager will honour ---
+#
+# The system unit's list is deliberately not copied wholesale. Several of those
+# directives need privilege the user manager does not have, and systemd's
+# behaviour on an unavailable one is to fail the unit rather than skip it, so a
+# copied list is a service that will not start. These are the ones that work
+# unprivileged.
+NoNewPrivileges=true
+# **`PrivateTmp` is deliberately absent**, and it was here first, which is the
+# reason it is worth a note rather than a silent omission. In a user manager it
+# needs unprivileged user namespaces, and on the distributions that disable
+# those it does not degrade -- the unit fails to start. That is exactly the
+# trap this file's own header warns about, walked into by the file itself.
+#
+# It also buys nothing here. The daemon writes `StateDirectory` and reads
+# nothing it did not create; it never opens `/tmp` at all.
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=default.target
